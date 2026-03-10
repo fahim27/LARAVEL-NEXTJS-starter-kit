@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-header("Access-Control-Allow-Origin: *");
+// header("Access-Control-Allow-Origin: *");
 
 
 Route::get('/', function () {

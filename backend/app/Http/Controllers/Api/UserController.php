@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -44,29 +46,31 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email'    => 'required|string|email',
             'password' => 'required|string',
         ]);
 
-        $attempt = auth()->attempt(['email' => $request->email, 'password' => $request->password]);
-
-        if (!$attempt) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid credentials',
-            ]);
+        if ($validator->fails()) {
+            return jsonResponse(false, $validator->errors()->all());
         }
 
-        $user = auth()->user();
+        // Explicitly use the 'web' guard to ensure the session is set
+        if (!Auth::guard('web')->attempt($request->only('email', 'password'))) {
+            return jsonResponse(false, "Invalid credentials");
+        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Login successful',
-            'data'    => [
-                'token' => $user->createToken('auth_token')->plainTextToken,
-                'user'  => $user
-            ]
-        ]);
+        // This is what makes the cookie "Authenticated"
+
+        // 1. Link the user to the session
+        $request->session()->regenerate();
+
+        // 2. Add a dummy value to ensure the session isn't "empty"
+        $request->session()->put('login_time', now()->timestamp);
+
+        // 3. FORCE the driver to write the file right now
+        $request->session()->save();
+
+        return jsonResponse(true, "Login successful", ['user' => Auth::user()]);
     }
 }

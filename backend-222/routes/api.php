@@ -29,7 +29,7 @@ Route::controller(PostController::class)->prefix('posts')->group(function () {
     Route::get("single-post/{id}", 'singlePost');
 });
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum'])->get('/users', function (Request $request) {
     return $request->user();
 });
 

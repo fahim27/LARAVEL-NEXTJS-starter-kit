@@ -23,6 +23,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->group('api', [
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            // \Illuminate\Http\Middleware\HandleCors::class
+            // \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+        ]);
+        $middleware->group('web', [
+            // \Illuminate\Http\Middleware\HandleCors::class
             // \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
         ]);
     })

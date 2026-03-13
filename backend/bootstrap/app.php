@@ -15,8 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         // This enables Sanctum's ability to guard API routes with cookies
         $middleware->statefulApi();
 
-       
-    
+        $middleware->validateCsrfTokens(
+            except: ['api*']
+        );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

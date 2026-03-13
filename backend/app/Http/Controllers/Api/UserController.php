@@ -11,13 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function dashboard()
+
+    public function user()
     {
-        return response()->json([
-            'success' => true,
-            'data'    => [
-                'user'  => auth()->user()
-            ]
+        return jsonResponse(true, "User Data", [
+            'user' => auth()->user(),
         ]);
     }
     public function register(Request $request)
@@ -46,7 +44,6 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        dd(21);
         $validator = Validator::make($request->all(), [
             'email'    => 'required|string|email',
             'password' => 'required|string',
@@ -58,16 +55,77 @@ class UserController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        // Explicitly use the 'web' guard to ensure the session is set
         if (Auth::attempt($credentials)) {
-            // User authenticated successfully
-            return jsonResponse(true, "Login successful", ['user' => Auth::user()]);
-        } else {
-            return jsonResponse(false, "Login failed");
+            $user = Auth::user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+            return jsonResponse(true, "Login successful", [
+                'user' => $user,
+                'token' => $token
+            ]);
         }
 
-        $request->session()->regenerate();
+        return jsonResponse(false, "Login failed");
+    }
 
-        return jsonResponse(true, "Login successful", ['user' => Auth::user()]);
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return jsonResponse(true, "Logged out successfully");
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+
+        $validator = Validator::make($request->all(), [
+            'name'        => 'required|required|string|max:255',
+            'email'       => 'required|required|string|email|max:255|unique:users,email,' . $user->id,
+            'address'     => 'required|string|max:255',
+            'city'        => 'required|string|max:255',
+            'state'       => 'required|string|max:255',
+            'postal_code' => 'required|string|max:20',
+            'country'     => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return jsonResponse(false, $validator->errors()->all());
+        }
+
+        $user->name        = $request->name;
+        $user->email       = $request->email;
+        $user->address     = $request->address;
+        $user->city        = $request->city;
+        $user->state       = $request->state;
+        $user->postal_code = $request->postal_code;
+        $user->country     = $request->country;
+        $user->save();
+
+        return jsonResponse(true, "Profile updated successfully", [
+            'user' => $user,
+        ]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required|string',
+            'current_password' => 'required|string',
+            'password'         => 'required|string|min:5|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return jsonResponse(false, $validator->errors()->all());
+        }
+
+        $user = $request->user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return jsonResponse(false, "Current password is incorrect");
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return jsonResponse(true, "Password updated successfully");
     }
 }

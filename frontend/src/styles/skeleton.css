@@ -1,0 +1,43 @@
+/* Skeleton card container */
+.skeleton-card {
+    border: 1px solid #e2e8f0;
+    /* light gray border */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: #f0f0f0;
+    animation: pulse 1.5s infinite;
+}
+
+/* Skeleton title (big line) */
+.skeleton-title {
+    height: 1.5rem;
+    width: 75%;
+    background-color: #e2e8f0;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+/* Skeleton lines (body text) */
+.skeleton-line {
+    height: 1rem;
+    width: 100%;
+    background-color: #e2e8f0;
+    margin-bottom: 0.25rem;
+    border-radius: 0.25rem;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0% {
+        background-color: #f0f0f0;
+    }
+
+    50% {
+        background-color: #e0e0e0;
+    }
+
+    100% {
+        background-color: #f0f0f0;
+    }
+}

@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from "next/link";
 import { getCookieFromServer } from '@/lib/utilities/serverCookie';
+import UserLogOutButton from './UserLogOutButton';
 
 export default async function TopNav() {
     const authToken = await getCookieFromServer();
@@ -40,14 +41,13 @@ export default async function TopNav() {
                                         <Link className="nav-link text-white" href="/user/dashboard">Dashboard</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="btn btn-danger" href="/dashboard">Logout</Link>
+                                        <UserLogOutButton btnClass="btn btn-danger" />
                                     </li>
                                 </>
                             ) : <li className="nav-item">
-                                <Link className="nav-link text-white" href="/login">Login</Link>
+                                <Link className="nav-link text-white" href="/user/login">Login</Link>
                             </li>
                         }
-
                     </ul>
 
                 </div>

@@ -6,7 +6,7 @@ export default function UserSideBar() {
     return (
         <>
             {/* Sidebar */}
-            <nav className="col-md-3 col-lg-2 d-md-block bg-dark text-white sidebar collapse p-3 mt-5">
+            <nav className="col-md-3 col-lg-2 d-md-block bg-dark text-white sidebar collapse p-3 mt-4">
                 <h4 className="text-center mb-4">Dashboard</h4>
                 <ul className="nav flex-column">
                     <li className="nav-item mb-2">

@@ -14,7 +14,6 @@ export default async function ProfilePage() {
   if (!success) return <ErrorManager message={message} showPage={false} />;
   return (
     <main className="col-md-8 ms-sm-auto col-lg-10 px-md-4 py-4 ms-5">
-      <h1 className="mb-4">Update Profile</h1>
       <UpdateForm user={user} authToken={authToken} />
     </main>
   );

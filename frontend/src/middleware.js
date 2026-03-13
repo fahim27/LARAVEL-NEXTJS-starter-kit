@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server";
+import { userMiddleware } from "./middleware/userMiddlewareManager";
 
 export function middleware(request) {
-  const token = request.cookies.get("auth_token");
-  console.log("this is token", token);
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/user")) {
+    return userMiddleware(request);
+  }
+
   return NextResponse.next();
 }
 
 // only run on these paths
 export const config = {
-  matcher: ["/posts"],
+  matcher: ["/user/:path*"],
 };

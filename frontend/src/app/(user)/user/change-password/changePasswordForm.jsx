@@ -30,8 +30,8 @@ export default function ChangePasswordForm({ authToken }) {
     });
     return (
         <div className='card'>
-            <div className="card-header bg-primary text-white">
-                Change Password
+            <div className="card-header">
+                <h4>Change Password</h4>
             </div>
             <div className="card-body">
                 <form onSubmit={formik.handleSubmit} className='row gy-3'>
@@ -47,7 +47,9 @@ export default function ChangePasswordForm({ authToken }) {
                         <label className='form-label' htmlFor="password_confirmation">Confirm New Password</label>
                         <FormikInput formik={formik} name="password_confirmation" placeholder="Confirm your new password" type="password" />
                     </div>
-                    <button type="submit" className="btn btn-primary" >Update Password</button>
+                    <div className="col-12">
+                        <button type="submit" className="btn btn-primary" >Update Password</button>
+                    </div>
                 </form>
             </div>
         </div>

@@ -16,29 +16,41 @@ export default async function UserDashboard() {
 
   return (
     <main className="col-md-8 ms-sm-auto col-lg-10 px-md-4 py-4 ms-5">
-      <h1 className="mb-4">User Dashboard</h1>
-
-      {/* User Information Card */}
-      <div className="card" style={{ maxWidth: "500px" }}>
-        <div className="card-header bg-primary text-white">
-          User Information
+      <div className="card">
+        <div className="card-header">
+          <h4>User Information</h4>
         </div>
         <div className="card-body">
-          <p>
-            <strong>Name:</strong> {user.name || "N/A"}
-          </p>
-          <p>
-            <strong>Email:</strong> {user.email || "N/A"}
-          </p>
-          <p>
-            <strong>ID:</strong> {user.id || "N/A"}
-          </p>
-          <p>
-            <strong>Joined:</strong>{" "}
-            {user.created_at
-              ? new Date(user.created_at).toLocaleDateString()
-              : "N/A"}
-          </p>
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item d-flex justify-content-between align-items-center gap-2 flex-wrap">
+              <strong>Name:</strong> {user.name || "N/A"}
+            </li>
+            <li className="list-group-item d-flex justify-content-between align-items-center gap-2 flex-wrap">
+              <strong>Email:</strong> {user.email || "N/A"}
+            </li>
+
+            <li className="list-group-item d-flex justify-content-between align-items-center gap-2 flex-wrap">
+              <strong>Address:</strong> {user.address || "N/A"}
+            </li>
+            <li className="list-group-item d-flex justify-content-between align-items-center gap-2 flex-wrap">
+              <strong>City:</strong> {user.city || "N/A"}
+            </li>
+            <li className="list-group-item d-flex justify-content-between align-items-center gap-2 flex-wrap">
+              <strong>State:</strong> {user.state || "N/A"}
+            </li>
+            <li className="list-group-item d-flex justify-content-between align-items-center gap-2 flex-wrap">
+              <strong>Postal Code:</strong> {user.postal_code || "N/A"}
+            </li>
+            <li className="list-group-item d-flex justify-content-between align-items-center gap-2 flex-wrap">
+              <strong>Country:</strong> {user.country || "N/A"}
+            </li>
+            <li className="list-group-item d-flex justify-content-between align-items-center gap-2 flex-wrap">
+              <strong>Joined:</strong>{" "}
+              {user.created_at
+                ? new Date(user.created_at).toLocaleDateString()
+                : "N/A"}
+            </li>
+          </ul>
         </div>
       </div>
     </main>

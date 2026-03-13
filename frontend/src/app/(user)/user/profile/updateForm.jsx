@@ -43,41 +43,48 @@ export default function UpdateForm({ user, authToken }) {
     });
 
     return (
-        <form onSubmit={formik.handleSubmit} className='row gy-3'>
-            <div className="form-group col-12">
-                <label className='form-label' htmlFor="name">Name</label>
-                <FormikInput formik={formik} name="name" placeholder="Enter your name" type="text" />
+        <div className='card'>
+            <div className='card-header'>
+                <h4>Update Profile</h4>
             </div>
-            <div className="form-group col-12">
-                <label className='form-label' htmlFor="email">Email address</label>
-                <FormikInput formik={formik} name="email" placeholder="Enter your email" type="email" />
-            </div>
+            <div className='card-body'>
+                <form onSubmit={formik.handleSubmit} className='row gy-3'>
+                    <div className="form-group col-12">
+                        <label className='form-label' htmlFor="name">Name</label>
+                        <FormikInput formik={formik} name="name" placeholder="Enter your name" type="text" />
+                    </div>
+                    <div className="form-group col-12">
+                        <label className='form-label' htmlFor="email">Email address</label>
+                        <FormikInput formik={formik} name="email" placeholder="Enter your email" type="email" />
+                    </div>
 
-            <div className="form-group col-12">
-                <label className='form-label' htmlFor="address">Address</label>
-                <FormikInput formik={formik} name="address" placeholder="Enter address" type="text" />
-            </div>
-            <div className="form-group col-12">
-                <label className='form-label' htmlFor="city">City</label>
-                <FormikInput formik={formik} name="city" placeholder="Enter city" type="text" />
-            </div>
-            <div className="form-group col-6">
-                <label className='form-label' htmlFor="state">State</label>
-                <FormikInput formik={formik} name="state" placeholder="Enter state" type="text" />
-            </div>
-            <div className="form-group col-6">
-                <label className='form-label' htmlFor="postcode">PostCode</label>
-                <FormikInput formik={formik} name="postal_code" placeholder="Enter postcode" type="text" />
-            </div>
+                    <div className="form-group col-12">
+                        <label className='form-label' htmlFor="address">Address</label>
+                        <FormikInput formik={formik} name="address" placeholder="Enter address" type="text" />
+                    </div>
+                    <div className="form-group col-12">
+                        <label className='form-label' htmlFor="city">City</label>
+                        <FormikInput formik={formik} name="city" placeholder="Enter city" type="text" />
+                    </div>
+                    <div className="form-group col-6">
+                        <label className='form-label' htmlFor="state">State</label>
+                        <FormikInput formik={formik} name="state" placeholder="Enter state" type="text" />
+                    </div>
+                    <div className="form-group col-6">
+                        <label className='form-label' htmlFor="postcode">PostCode</label>
+                        <FormikInput formik={formik} name="postal_code" placeholder="Enter postcode" type="text" />
+                    </div>
 
-            <div className="form-group col-12">
-                <label className='form-label' htmlFor="country">Country</label>
-                <FormikInput formik={formik} name="country" placeholder="Enter country" type="text" />
+                    <div className="form-group col-12">
+                        <label className='form-label' htmlFor="country">Country</label>
+                        <FormikInput formik={formik} name="country" placeholder="Enter country" type="text" />
+                    </div>
+                    <div className="col-12">
+                        <button type="submit" className="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
-            <div className="col-12">
-                <button type="submit" className="btn btn-primary">Submit</button>
-            </div>
-        </form>
+        </div>
 
     )
 }

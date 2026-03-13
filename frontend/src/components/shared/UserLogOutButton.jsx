@@ -5,7 +5,7 @@ import React from 'react'
 import toast from 'react-hot-toast';
 import { useRouter } from "next/navigation";
 
-export default function UserLogOutButton() {
+export default function UserLogOutButton({ btnClass = "nav-link text-white" }) {
     const router = useRouter();
     const userLogoutAction = async () => {
         const token = Cookies.get('auth_token') // => 'value'
@@ -17,7 +17,7 @@ export default function UserLogOutButton() {
         }
     }
     return (
-        <button className="nav-link text-white" onClick={userLogoutAction}>
+        <button className={btnClass} onClick={userLogoutAction}>
             Logout
         </button>
     )

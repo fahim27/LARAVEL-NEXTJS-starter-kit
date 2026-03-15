@@ -1,29 +1,37 @@
 import { NextResponse } from "next/server";
 
 export function userMiddleware(request) {
-  const token = request.cookies.get("auth_token");
   const { pathname } = request.nextUrl;
+  const token = request.cookies.get("auth_token")?.value;
 
-  // allow login & register without token
-  if (
-    pathname.startsWith("/user/login") ||
-    pathname.startsWith("/user/register")
-  ) {
-    if (token) {
-      return NextResponse.redirect(new URL("/user/dashboard", request.url));
-    }
+  const publicRoutes = ["/user/login", "/user/register"];
+
+  const passwordRoutes = [
+    "/user/forget-password",
+    "/user/verify-otp",
+    "/user/reset-password",
+  ];
+
+  const isPublicRoute = publicRoutes.some((route) =>
+    pathname.startsWith(route),
+  );
+
+  const isPasswordRoute = passwordRoutes.some((route) =>
+    pathname.startsWith(route),
+  );
+
+  // If logged in user tries to access login/register
+  if (token && isPublicRoute) {
+    return NextResponse.redirect(new URL("/user/dashboard", request.url));
+  }
+
+  // Allow public routes
+  if (isPublicRoute || isPasswordRoute) {
     return NextResponse.next();
   }
 
-  // protect other user routes
+  // Protect all other routes
   if (!token) {
-    if (
-      pathname.startsWith("/user/forget-password") ||
-      pathname.startsWith("/user/verify-otp") ||
-      pathname.startsWith("/user/reset-password")
-    ) {
-      return NextResponse.next();
-    }
     return NextResponse.redirect(new URL("/user/login", request.url));
   }
 

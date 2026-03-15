@@ -57,7 +57,7 @@ class PasswordResetController extends Controller
             return jsonResponse(false, "Invalid or expired OTP");
         }
 
-        $user->password = Hash::make($request->new_password);
+        $user->password = Hash::make($request->password);
         $user->otp = null;
         $user->otp_expires_at = null;
         $user->save();

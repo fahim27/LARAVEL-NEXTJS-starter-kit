@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,13 @@ Route::post('/user/register', [UserController::class, 'register']);
 Route::post('/user/login', [UserController::class, 'login']);
 Route::post('/user/google-login', [UserController::class, 'googleLogin']);
 
+
+Route::controller(PasswordResetController::class)->prefix('user-password-reset')->group(function () {
+    Route::post('find-account', 'findAccount');
+    Route::post('verify-otp', 'verifyOTP');
+    Route::post('reset-password', 'resetPassword');
+    Route::post('resent-otp', 'resentOTP');
+});
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(UserController::class)->group(function () {

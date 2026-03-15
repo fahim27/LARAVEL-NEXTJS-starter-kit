@@ -17,6 +17,13 @@ export function userMiddleware(request) {
 
   // protect other user routes
   if (!token) {
+    if (
+      pathname.startsWith("/user/forget-password") ||
+      pathname.startsWith("/user/verify-otp") ||
+      pathname.startsWith("/user/reset-password")
+    ) {
+      return NextResponse.next();
+    }
     return NextResponse.redirect(new URL("/user/login", request.url));
   }
 

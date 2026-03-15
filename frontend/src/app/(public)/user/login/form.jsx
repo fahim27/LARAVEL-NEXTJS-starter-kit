@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation'
 import Cookies from "js-cookie";
 import GoogleLoginButton from '@/components/button/GoogleLoginButton';
+import Link from 'next/link';
 
 export default function LoginForm() {
     const router = useRouter();
@@ -54,9 +55,9 @@ export default function LoginForm() {
             </div>
 
             <div className="text-end mb-3">
-                <a href="#" className="small text-decoration-none">
+                <Link href="/user/forget-password" className="small text-decoration-none">
                     Forgot password?
-                </a>
+                </Link>
             </div>
 
             {/* Login Button */}

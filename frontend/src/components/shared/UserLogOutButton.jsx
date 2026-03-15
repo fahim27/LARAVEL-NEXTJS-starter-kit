@@ -13,7 +13,7 @@ export default function UserLogOutButton({ btnClass = "nav-link text-white" }) {
         if (success) {
             toast.success(message);
             Cookies.remove('auth_token');
-            router.push("/login");
+            router.push("/user/login");
         }
     }
     return (

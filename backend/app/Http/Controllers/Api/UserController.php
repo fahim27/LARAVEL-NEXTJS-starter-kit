@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Socialite;
+
 
 class UserController extends Controller
 {
@@ -65,6 +67,34 @@ class UserController extends Controller
         }
 
         return jsonResponse(false, "Login failed");
+    }
+
+    public function googleLogin(Request $request)
+    {
+        try {
+            $token      = $request->token;
+            $googleUser = Socialite::driver('google')->userFromToken($token);
+            $id         = $googleUser->getId();
+
+            $user = User::where('provider_id', $id)->where('provider', 'google')->first();
+
+            if (!$user) {
+                $user = new User();
+                $user->name        = $googleUser->getName();
+                $user->email       = $googleUser->getEmail();
+                $user->provider    = 'google';
+                $user->provider_id = $id;
+                $user->password    = Hash::make(uniqid()); // Generate a random password
+                $user->save();
+            }
+            $token = $user->createToken('auth_token')->plainTextToken;
+            return jsonResponse(true, "Login successful", [
+                'user' => $user,
+                'token' => $token
+            ]);
+        } catch (\Exception $e) {
+            return jsonResponse(false, "Google login failed: " . $e->getMessage());
+        }
     }
 
     public function logout(Request $request)

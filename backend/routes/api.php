@@ -13,6 +13,7 @@ Route::controller(PostController::class)->prefix('posts')->group(function () {
 
 Route::post('/user/register', [UserController::class, 'register']);
 Route::post('/user/login', [UserController::class, 'login']);
+Route::post('/user/google-login', [UserController::class, 'googleLogin']);
 
 
 Route::middleware(['auth:sanctum'])->group(function () {

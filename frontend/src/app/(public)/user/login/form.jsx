@@ -7,6 +7,7 @@ import { attemptUserLogin } from '@/lib/api/user';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation'
 import Cookies from "js-cookie";
+import GoogleLoginButton from '@/components/button/GoogleLoginButton';
 
 export default function LoginForm() {
     const router = useRouter();
@@ -36,6 +37,9 @@ export default function LoginForm() {
         }
     });
 
+
+
+
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className="mb-3">
@@ -59,6 +63,11 @@ export default function LoginForm() {
             <button type='submit' className="btn btn-primary w-100 mb-3">
                 Login
             </button>
+
+            <div className="text-center text-muted mb-3">or</div>
+
+            <GoogleLoginButton />
+
         </form>
     )
 }
